@@ -1,0 +1,668 @@
+<html>
+
+<head>
+    <title>2225117-ミニプロ最終版</title>
+    <style>
+        #enemy1 {
+            position: absolute;
+            display: none;
+            z-index: 2;
+        }
+
+        #enemy2 {
+            position: absolute;
+            display: none;
+            z-index: 2;
+        }
+
+        #enemy3 {
+            position: absolute;
+            display: none;
+            z-index: 2;
+        }
+
+        #ally1 {
+            position: absolute;
+            display: none;
+            z-index: 2;
+        }
+
+        #ally2 {
+            position: absolute;
+            display: none;
+            z-index: 2;
+        }
+
+        #haikei {
+            width: 1280px;
+            height: 720px;
+        }
+
+        #game {
+            top: 105px;
+            left: 20px;
+            width: 1280px;
+            height: 720px;
+            border: 10px solid black;
+            position: absolute;
+            cursor: none;
+        }
+
+        #aso {
+            top: 860px;
+            left: 20px;
+            border: 5px solid green;
+            position: absolute;
+        }
+
+        #kakusi {
+            top: 105px;
+            left: 20px;
+            width: 1280px;
+            height: 720px;
+            border: 10px solid black;
+            position: absolute;
+            cursor: none;
+        }
+
+        #sta {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            margin: -1px 0 0 -1px;
+            z-index: 3;
+            pointer-events: none;
+            transition: transform 0.1s;
+            opacity: 0;
+        }
+
+        #im1 {
+            width: 100px;
+            height: 100x;
+            margin: -50px 0 0 -50px;
+        }
+
+        #bakuha {
+            width: 100px;
+            height: 100px;
+            margin: -50px 0 0 -50px;
+            z-index: 4;
+        }
+
+        #bakuhadiv {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            margin: -1px 0 0 -1px;
+            display: none;
+            z-index: 4;
+            transition: transform 0.1s;
+            opacity: 1;
+        }
+
+        canvas {
+            top: 105px;
+            left: 20px;
+            border: 10px solid blue;
+            position: absolute;
+            cursor: none;
+            padding: 0px;
+            z-index: 2;
+        }
+
+        #start {
+            display: none;
+            position: absolute;
+            top: 75px;
+            left: 20px;
+        }
+
+        #lt0 {
+            display: inline-block;
+            position: absolute;
+            top: 50px;
+            left: 20px;
+        }
+
+        #lt1 {
+            display: block;
+            order: 1;
+            display: inline-block;
+        }
+
+        #lt2 {
+            display: block;
+            order: 2;
+            display: inline-block;
+        }
+
+        #lt3 {
+            display: block;
+            display: inline-block;
+        }
+
+        #lt4 {
+            display: block;
+            display: inline-block;
+        }
+
+        #rise {
+            display: block;
+            display: inline-block;
+        }
+
+        #mozi {
+            display: inline-block;
+            cursor: none;
+            z-index: 1;
+            top: 135px;
+            left: 40px;
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        #r1 {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        #r2 {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        #r3 {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        #r4 {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        #timer {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>出題される問題に回答してください</h1>
+    <div id="lt0"><button id="lt1">30秒</button>
+        <button id="lt2">60秒</button>
+        <button id="lt3">90秒</button>
+        <button id="lt4">120秒</button>
+        <button id="rise">リセット</button>
+    </div>
+    <button id="start" onclick="gamestart">ゲームスタート！</button>
+    <div id="mozi">
+        <p id="r1">敵を0体撃破</p>
+        <p id="r2">味方を0体撃破</p>
+        <p id="r3">総スコア</p>
+        <p id="r4">ハイスコア</p>
+        <p id="timer">制限時間 秒</p>
+    </div>
+    <div id="game">
+        <img src="road_douro.png" id="haikei">
+        <img src="rteki1.png" id="enemy1" onclick="pushed1()">
+        <img src="rteki2.png" id="enemy2" onclick="pushed2()">
+        <img src="rteki3-2.png" id="enemy3" onclick="pushed3()">
+        <img src="bmika1.png" id="ally1" onclick="pushed4()">
+        <img src="bmika2.png" id="ally2" onclick="pushed5()">
+    </div>
+    <div id="kakusi"></div>
+    <div id="sta"><img id="im1" src="nc91679.png"></div>
+    <div id="bakuhadiv"><img src="bakuha.png" id="bakuha"></div>
+    <canvas id="can" width="1280" height="720"></canvas>
+    <div id="aso">
+        <h2>遊び方</h2>
+        <p>このゲームは音が出ます。ご注意ください。</p>
+        <p>ブラウザの①右上三点を押すと出てくる②ズーム調整機能にて青枠画面に収まるように調整した後③全画面表示機能を使用していただくと最大限お楽しみいただけます。詳しくは画像参照(画像はchromeの場合。edgeも同様の位置に同様の機能あり)
+        </p>
+        <img src="setumei.png">
+        <p>最初に制限時間を選択しボタンを押します。</p>
+        <p>ゲームスタート！と書かれたボタンが出てくるので押します。</p>
+        <p>赤が敵で青が撃ってはいけない味方です。赤い敵に照準を合わせクリックしていきます。敵によってスコアは異なります。</p>
+        <p>敵の配置は敵をすべて倒す、または味方を一体でも倒してしまうとリセットされます。</p>
+        <p>敵(味方)が重なっている場合は原則上に表示されている敵(味方)にのみ当たり判定があります。</p>
+        <p>当たり判定は四角です。そのため空白に見えてもあたりと判定されることがあります。ご了承ください。</p>
+        <p>ゲーム終了と出たら終了です。枠が数秒黒になった後再度青に戻れば時間を選び再度プレイしていただけます。</p>
+        <p>制限時間はカウントダウン形式で表示されます。適宜お好みでご確認ください。</p>
+        <p>時間を選ばず始めた場合はやめるまで続きます。制限時間が要らない方はご利用ください。</p>
+        <p>ハイスコアは時間制限ありの場合のみカウントされます。リセットを押した場合や再読み込みした際は消えますのでご注意ください。</p>
+        <p>時間制限ありでプレイした後、時間無制限でやりたい場合はリセットボタンを押してください。</p>
+    </div>
+    <script>
+        let zi = 1;
+        let zi2 = 2;
+        let j = 0;
+        let j1 = 0;
+        let j2 = 0;
+        let j3 = 0;
+        let no1 = 0;
+        let no2 = 0;
+        let no3 = 0;
+        let no4 = 0;
+        let no5 = 0;
+        let a = 900;
+        let b = 600;
+        let w1 = 124;
+        let h1 = 203;
+        let w2 = 97;
+        let h2 = 93;
+        let w3 = 413;
+        let h3 = 173;
+        let w4 = 126;
+        let h4 = 218;
+        let w5 = 268;
+        let h5 = 109;
+        let d1 = 900;
+        let limitTime = [30000, 60000, 90000, 120000];
+        let lt = 0;
+        let count1 = 30;
+        let audio1 = new Audio("zyuusei.mp3");
+        let audio2 = new Audio("zyuuriro.mp3");
+        let a10p = new Audio("p10.wav");
+        let a15p = new Audio("p15.wav");
+        let a20p = new Audio("p20.wav");
+        let a25p = new Audio("p25.wav");
+        let a30p = new Audio("p30.wav");
+        let a40p = new Audio("p40.wav");
+        let a50p = new Audio("p50.wav");
+        let a60p = new Audio("p60.wav");
+        let a90p = new Audio("p90.wav");
+        let a100p = new Audio("p100.wav");
+        let a120p = new Audio("p120.wav");
+        let a150p = new Audio("p150.wav");
+        let a300p = new Audio("p300.wav");
+        let ahaikou = new Audio("haikou.wav");
+        let ran1 = Math.floor(Math.random() * a); //縦座標ランダムenemy1
+        let ran2 = Math.floor(Math.random() * b); //横座標ランダムenemy1
+        let ran3 = Math.floor(Math.random() * a); //縦座標ランダムenemy2
+        let ran4 = Math.floor(Math.random() * b); //横座標ランダムenemy2
+        let ran5 = Math.floor(Math.random() * a); //縦座標ランダムenemy3
+        let ran6 = Math.floor(Math.random() * b); //横座標ランダムenemy3
+        let ran7 = Math.floor(Math.random() * a); //縦座標ランダムally1
+        let ran8 = Math.floor(Math.random() * b); //横座標ランダムally1
+        let ran9 = Math.floor(Math.random() * a); //縦座標ランダムally2
+        let ran10 = Math.floor(Math.random() * b); //横座標ランダムally2
+        let enemy1 = document.getElementById("enemy1");
+        let enemy2 = document.getElementById("enemy2");
+        let enemy3 = document.getElementById("enemy3");
+        let allly1 = document.getElementById("ally1");
+        let allly2 = document.getElementById("ally2");
+        let enemy1Size = { x: ran1, y: ran2, w: w1, h: h1 };
+        let enemy2Size = { x: ran3, y: ran4, w: w2, h: h2 };
+        let enemy3Size = { x: ran5, y: ran6, w: w3, h: h3 };
+        let ally1Size = { x: ran7, y: ran8, w: w4, h: h4 };
+        let ally2Size = { x: ran9, y: ran10, w: w5, h: h5 };
+        let pos = { x: 0, y: 0 };
+
+        function rankaku() {
+            ran1 = Math.floor(Math.random() * a); //縦座標ランダムenemy1
+            ran2 = Math.floor(Math.random() * b); //横座標ランダムenemy1
+            ran3 = Math.floor(Math.random() * a); //縦座標ランダムenemy2
+            ran4 = Math.floor(Math.random() * b); //横座標ランダムenemy2
+            ran5 = Math.floor(Math.random() * a); //縦座標ランダムenemy3
+            ran6 = Math.floor(Math.random() * b); //横座標ランダムenemy3
+            ran7 = Math.floor(Math.random() * a); //縦座標ランダムally1
+            ran8 = Math.floor(Math.random() * b); //横座標ランダムally1
+            ran9 = Math.floor(Math.random() * a); //縦座標ランダムally2
+            ran10 = Math.floor(Math.random() * b); //横座標ランダムally2
+            ctx.drawImage(allly1, ran7, ran8, w4, h4);
+            ctx.drawImage(allly2, ran9, ran10, w5, h5);
+            ctx.drawImage(enemy1, ran1, ran2, w1, h1);
+            ctx.drawImage(enemy2, ran3, ran4, w2, h2);
+            ctx.drawImage(enemy3, ran5, ran6, w3, h3);
+            ally1Size = { x: ran7, y: ran8, w: w4, h: h4 };
+            ally2Size = { x: ran9, y: ran10, w: w5, h: h5 };
+            enemy1Size = { x: ran1, y: ran2, w: w1, h: h1 };
+            enemy2Size = { x: ran3, y: ran4, w: w2, h: h2 };
+            enemy3Size = { x: ran5, y: ran6, w: w3, h: h3 };
+        }
+
+        window.onload = function () {
+            canvas = document.getElementById("can");
+            ctx = canvas.getContext("2d");
+            rankaku();
+            console.log("kaketa");
+            canvas.addEventListener("click", hoge);
+        }
+
+        document.onmousemove = function () {
+            let xza = event.clientX; //今現在の左上から
+            let yza = event.clientY; //同じく
+            document.getElementById("sta").style.top = yza + "px";
+            document.getElementById("sta").style.left = xza + "px";
+        }
+        document.getElementById("sta").style.opacity = 1;
+
+        document.getElementById("lt1").onclick = function () {
+            lt = 0;
+            count1 = 30;
+            document.getElementById("start").style.display = "block";
+            console.log(lt);
+            console.log(limitTime[lt]);
+        }
+        document.getElementById("lt2").onclick = function () {
+            lt = 1;
+            count1 = 60;
+            document.getElementById("start").style.display = "block";
+            console.log(lt);
+            console.log(limitTime[lt]);
+        }
+        document.getElementById("lt3").onclick = function () {
+            lt = 2;
+            count1 = 90;
+            document.getElementById("start").style.display = "block";
+            console.log(lt);
+            console.log(limitTime[lt]);
+        }
+        document.getElementById("lt4").onclick = function () {
+            lt = 3;
+            count1 = 120;
+            document.getElementById("start").style.display = "block";
+            console.log(lt);
+            console.log(limitTime[lt]);
+        }
+        document.getElementById("rise").onclick = function () {
+            location.reload();
+        }
+
+        document.getElementById("start").onclick = function () {
+            canvas = document.getElementById("can");
+            ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, 1280, 720);
+            j = 0;
+            j1 = 0;
+            j2 = 0;
+            document.getElementById("start").style.display = "none";
+            const p = document.getElementById("r1");
+            p.innerHTML = "敵を" + j1 + "体撃破";
+            const p2 = document.getElementById("r2");
+            p2.innerHTML = "味方を" + j2 + "体撃破";
+            const p3 = document.getElementById("r3");
+            p3.innerHTML = "総スコア" + j;
+            document.getElementById("lt1").style.pointerEvents = "none";
+            document.getElementById("lt2").style.pointerEvents = "none";
+            document.getElementById("lt3").style.pointerEvents = "none";
+            document.getElementById("lt4").style.pointerEvents = "none";
+            console.log(lt);
+            console.log(limitTime);
+            function countDown() {
+                if (count1 > 0) {
+                    count1--;
+                    timer.textContent = "制限時間" + count1 + "秒";
+                } else {
+                    timer.textContent = "タイムアップ！";
+                    clearInterval(countDownTimer);
+                }
+            }
+            const countDownTimer = setInterval(countDown, 1000);
+            rankaku();
+            timerId = setTimeout(finish, limitTime[lt])
+        }
+
+        function finish() {
+            canvas = document.getElementById("can");
+            ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, 1280, 720);
+            let text = "ゲーム終了！総スコア" + j + "ポイント！";
+            let fontSize = 50;
+            ctx.font = "75px Arial";
+            let textWidth = ctx.measureText(text).width;
+            ctx.fillText(text, (1280 - textWidth) / 2, 420);
+            document.getElementById("kakusi").style.zIndex = 5;
+            if (j > j3) {
+                j3 = j
+                const p4 = document.getElementById("r4");
+                p4.innerHTML = "ハイスコア" + j3;
+                ahaikou.play();
+            }
+            timerId = setTimeout(saisyoukyo, 1000);
+            function saisyoukyo() {
+                ctx.clearRect(0, 0, 1280, 720);
+                let text = "ゲーム終了！総スコア" + j + "ポイント！";
+                let fontSize = 50;
+                ctx.font = "75px Arial";
+                let textWidth = ctx.measureText(text).width;
+                ctx.fillText(text, (1280 - textWidth) / 2, 420);
+                document.getElementById("kakusi").style.zIndex = 1;
+                document.getElementById("lt1").style.pointerEvents = "auto";
+                document.getElementById("lt2").style.pointerEvents = "auto";
+                document.getElementById("lt3").style.pointerEvents = "auto";
+                document.getElementById("lt4").style.pointerEvents = "auto";
+
+            }
+        }
+
+        function hoge(e) {
+            let rect = canvas.getBoundingClientRect();
+            let point = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+
+            let bakuxza = event.clientX; //今現在の左上から
+            let bakuyza = event.clientY; //同じく
+            document.getElementById("bakuhadiv").style.top = bakuyza + "px";
+            document.getElementById("bakuhadiv").style.left = bakuxza + "px";
+            document.getElementById("bakuhadiv").style.display = "block";
+            timerId = setTimeout(hihyouzi, d1);
+
+            function hihyouzi() {
+                document.getElementById("bakuhadiv").style.display = "none";
+            }
+
+            let hit1 =
+                (enemy1Size.x <= point.x && point.x <= enemy1Size.x + enemy1Size.w)
+                && (enemy1Size.y <= point.y && point.y <= enemy1Size.y + enemy1Size.h);
+            let hit2 =
+                (enemy2Size.x <= point.x && point.x <= enemy2Size.x + enemy2Size.w)
+                && (enemy2Size.y <= point.y && point.y <= enemy2Size.y + enemy2Size.h);
+            let hit3 =
+                (enemy3Size.x <= point.x && point.x <= enemy3Size.x + enemy3Size.w)
+                && (enemy3Size.y <= point.y && point.y <= enemy3Size.y + enemy3Size.h);
+            let hit4 =
+                (ally1Size.x <= point.x && point.x <= ally1Size.x + ally1Size.w)
+                && (ally1Size.y <= point.y && point.y <= ally1Size.y + ally1Size.h);
+            let hit5 =
+                (ally2Size.x <= point.x && point.x <= ally2Size.x + ally2Size.w)
+                && (ally2Size.y <= point.y && point.y <= ally2Size.y + ally2Size.h);
+
+            function kaku() {
+                audio1.pause();
+                audio1.currentTime = 0;
+                if (j == 10) {
+                    a10p.play();
+                } else if (j == 15) {
+                    a15p.play();
+                } else if (j == 20) {
+                    a20p.play();
+                } else if (j == 25) {
+                    a25p.play();
+                } else if (j == 30) {
+                    a30p.play();
+                } else if (j == 40) {
+                    a40p.play();
+                } else if (j == 50) {
+                    a50p.play();
+                } else if (j == 60) {
+                    a60p.play();
+                } else if (j == 90) {
+                    a90p.play();
+                } else if (j == 100) {
+                    a100p.play();
+                } else if (j == 120) {
+                    a120p.play();
+                } else if (j == 150) {
+                    a150p.play();
+                } else if (j == 300) {
+                    a300p.play();
+                } else {
+                    audio2.play();
+                }
+                no1 = 0;
+                no2 = 0;
+                no3 = 0;
+
+                rankaku();
+                hit1 =
+                    (enemy1Size.x <= point.x && point.x <= enemy1Size.x + enemy1Size.w)
+                    && (enemy1Size.y <= point.y && point.y <= enemy1Size.y + enemy1Size.h);
+                hit2 =
+                    (enemy2Size.x <= point.x && point.x <= enemy2Size.x + enemy2Size.w)
+                    && (enemy2Size.y <= point.y && point.y <= enemy2Size.y + enemy2Size.h);
+                hit3 =
+                    (enemy3Size.x <= point.x && point.x <= enemy3Size.x + enemy3Size.w)
+                    && (enemy3Size.y <= point.y && point.y <= enemy3Size.y + enemy3Size.h);
+                hit4 =
+                    (ally1Size.x <= point.x && point.x <= ally1Size.x + ally1Size.w)
+                    && (ally1Size.y <= point.y && point.y <= ally1Size.y + ally1Size.h);
+                hit5 =
+                    (ally2Size.x <= point.x && point.x <= ally2Size.x + ally2Size.w)
+                    && (ally2Size.y <= point.y && point.y <= ally2Size.y + ally2Size.h);
+            }
+
+            function mikatakaki() {
+                ctx.drawImage(allly1, ran7, ran8, w4, h4);
+                ctx.drawImage(allly2, ran9, ran10, w5, h5);
+            }
+
+            if (hit1) {
+                audio1.pause();
+                audio1.currentTime = 0;
+                j = j + 2;
+                j1 = j1 + 1;
+                console.log(j);
+                const p = document.getElementById("r1");
+                p.innerHTML = "敵を" + j1 + "体撃破";
+                const p3 = document.getElementById("r3");
+                p3.innerHTML = "総スコア" + j;
+                audio1.play();
+                no1 = 1;
+                enemy1Size = { x: 0, y: 0, w: 0, h: 0 };
+                ctx.clearRect(0, 0, 1280, 720);
+                console.log(no1);
+                console.log(no2);
+                console.log(no3);
+                if (no1 == 1 && no2 == 1 && no3 == 1) {
+                    setTimeout(kaku, d1);
+                } else if (no2 == 1) {
+                    mikatakaki();
+                    ctx.drawImage(enemy3, ran5, ran6, w3, h3);
+                } else if (no3 == 1) {
+                    mikatakaki();
+                    ctx.drawImage(enemy2, ran3, ran4, w2, h2);
+                } else {
+                    mikatakaki();
+                    ctx.drawImage(enemy2, ran3, ran4, w2, h2);
+                    ctx.drawImage(enemy3, ran5, ran6, w3, h3);
+                    console.log("kaiyayo");
+                }
+
+
+            } else if (hit2) {
+                audio1.pause();
+                audio1.currentTime = 0;
+                j = j + 3;
+                j1 = j1 + 1;
+                console.log(j);
+                const p = document.getElementById("r1");
+                p.innerHTML = "敵を" + j1 + "体撃破";
+                const p3 = document.getElementById("r3");
+                p3.innerHTML = "総スコア" + j;
+                audio1.play();
+                no2 = 1;
+                enemy2Size = { x: 0, y: 0, w: 0, h: 0 };
+                ctx.clearRect(0, 0, 1280, 720);
+                console.log(no1);
+                console.log(no2);
+                console.log(no3);
+                if (no1 == 1 && no2 == 1 && no3 == 1) {
+                    setTimeout(kaku, d1);
+                } else if (no1 == 1) {
+                    mikatakaki();
+                    ctx.drawImage(enemy3, ran5, ran6, w3, h3);
+                } else if (no3 == 1) {
+                    mikatakaki();
+                    ctx.drawImage(enemy1, ran1, ran2, w1, h1);
+                } else {
+                    mikatakaki();
+                    ctx.drawImage(enemy1, ran1, ran2, w1, h1);
+                    ctx.drawImage(enemy3, ran5, ran6, w3, h3);
+                    console.log("kaiyayo");
+                }
+
+            } else if (hit3) {
+                audio1.pause();
+                audio1.currentTime = 0;
+                j = j + 1;
+                j1 = j1 + 1;
+                console.log(j);
+                const p = document.getElementById("r1");
+                p.innerHTML = "敵を" + j1 + "体撃破";
+                const p3 = document.getElementById("r3");
+                p3.innerHTML = "総スコア" + j;
+                audio1.play();
+
+                ctx.clearRect(0, 0, 1280, 720);
+                no3 = 1;
+                enemy3Size = { x: 0, y: 0, w: 0, h: 0 };
+                ctx.clearRect(0, 0, 1280, 720);
+                console.log(no1);
+                console.log(no2);
+                console.log(no3);
+                if (no1 == 1 && no2 == 1 && no3 == 1) {
+                    setTimeout(kaku, d1);
+                } else if (no1 == 1) {
+                    mikatakaki();
+                    ctx.drawImage(enemy2, ran3, ran4, w2, h2);
+                } else if (no2 == 1) {
+                    mikatakaki();
+                    ctx.drawImage(enemy1, ran1, ran2, w1, h1);
+                } else {
+                    mikatakaki();
+                    ctx.drawImage(enemy1, ran1, ran2, w1, h1);
+                    ctx.drawImage(enemy2, ran3, ran4, w2, h2);
+                    console.log("kaiyayo");
+                }
+
+            } else if (hit4) {
+                audio1.pause();
+                audio1.currentTime = 0;
+                j = j - 1;
+                j2 = j2 + 1;
+                console.log(j);
+                const p2 = document.getElementById("r2");
+                p2.innerHTML = "味方を" + j2 + "体撃破";
+                const p3 = document.getElementById("r3");
+                p3.innerHTML = "総スコア" + j;
+                audio1.play();
+                ctx.clearRect(0, 0, 1280, 720);
+                setTimeout(kaku, d1);
+
+            } else if (hit5) {
+                audio1.pause();
+                audio1.currentTime = 0;
+                j = j - 2;
+                j2 = j2 + 1;
+                console.log(j);
+                const p2 = document.getElementById("r2");
+                p2.innerHTML = "味方を" + j2 + "体撃破";
+                const p3 = document.getElementById("r3");
+                p3.innerHTML = "総スコア" + j;
+                audio1.play();
+                ctx.clearRect(0, 0, 1280, 720);
+                setTimeout(kaku, d1);
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

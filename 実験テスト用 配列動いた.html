@@ -1,0 +1,511 @@
+<html>
+
+<head>
+    <title>2225117-ミニプロ最終版</title>
+    <style>
+        #mo1 {
+            position: absolute;
+            display: none;
+            z-index: 2;
+        }
+
+        #mo2 {
+            position: absolute;
+            display: none;
+            z-index: 2;
+        }
+
+        #mo3 {
+            position: absolute;
+            display: none;
+            z-index: 2;
+        }
+
+
+
+        #game {
+            top: 105px;
+            left: 20px;
+            width: 1280px;
+            height: 720px;
+            border: 10px solid black;
+            position: absolute;
+            cursor: none;
+        }
+
+        #aso {
+            top: 860px;
+            left: 20px;
+            border: 5px solid green;
+            position: absolute;
+        }
+
+        #kakusi {
+            top: 105px;
+            left: 20px;
+            width: 1280px;
+            height: 720px;
+            border: 10px solid black;
+            position: absolute;
+            cursor: none;
+        }
+
+        #sta {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            margin: -1px 0 0 -1px;
+            z-index: 3;
+            pointer-events: none;
+            transition: transform 0.1s;
+            opacity: 0;
+        }
+
+        #im1 {
+            width: 100px;
+            height: 100x;
+            margin: -50px 0 0 -50px;
+        }
+
+
+        canvas {
+            top: 105px;
+            left: 20px;
+            border: 10px solid blue;
+            position: absolute;
+            cursor: none;
+            padding: 0px;
+            z-index: 2;
+        }
+
+        #start {
+            display: none;
+            position: absolute;
+            top: 75px;
+            left: 20px;
+        }
+
+        #lt0 {
+            display: inline-block;
+            position: absolute;
+            top: 50px;
+            left: 20px;
+        }
+
+        #lt1 {
+            display: block;
+            order: 1;
+            display: inline-block;
+        }
+
+        #lt2 {
+            display: block;
+            order: 2;
+            display: inline-block;
+        }
+
+        #lt3 {
+            display: block;
+            display: inline-block;
+        }
+
+        #lt4 {
+            display: block;
+            display: inline-block;
+        }
+
+        #senntakusi0 {
+            display: inline-block;
+            position: absolute;
+            top: 50px;
+            left: 20px;
+        }
+
+        #se1 {
+            display: block;
+            order: 1;
+            display: inline-block;
+        }
+
+        #se2 {
+            display: block;
+            order: 2;
+            display: inline-block;
+        }
+
+        #se3 {
+            display: block;
+            display: inline-block;
+        }
+
+        #se4 {
+            display: block;
+            display: inline-block;
+        }
+
+        #rise {
+            display: block;
+            display: inline-block;
+        }
+
+        #mozi {
+            display: inline-block;
+            cursor: none;
+            z-index: 1;
+            top: 135px;
+            left: 40px;
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        #r1 {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        #r2 {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        #r3 {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        #r4 {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        #timer {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>以下の問題を回答せよ</h1>
+    <div id="lt0"><button id="lt1">30秒</button>
+        <button id="lt2">60秒</button>
+        <button id="lt3">90秒</button>
+        <button id="lt4">120秒</button>
+        <button id="rise">リセット</button>
+    </div>
+    <button id="start" onclick="gamestart">ゲームスタート！</button>
+    <div id="mozi">
+        <p id="r1">敵を0体撃破</p>
+        <p id="r2">味方を0体撃破</p>
+        <p id="r3">総スコア</p>
+        <p id="r4">ハイスコア</p>
+        <p id="timer">制限時間 秒</p>
+    </div>
+    <div id="game">
+        <img src="road_douro.png" id="haikei">
+        <img src="mo1.png" id="mo1" onclick="pushed1()">
+        <img src="mo2.png" id="mo2" onclick="pushed2()">
+        <img src="mo3.png" id="mo3" onclick="pushed3()">
+        <img src="bmika1.png" id="ally1" onclick="pushed4()">
+        <img src="bmika2.png" id="ally2" onclick="pushed5()">
+    </div>
+    <div id="kakusi"></div>
+    <div id="sta"><img id="im1" src="nc91679.png"></div>
+    <div id="bakuhadiv"><img src="bakuha.png" id="bakuha"></div>
+    <canvas id="can" width="1280" height="720"></canvas>
+    <div id="aso">
+        <div id="senntakusi0"><button id="se1">①</button>
+            <button id="se2">②</button>
+            <button id="se3">③</button>
+            <button id="se4">④</button>
+            <button id="rise">リセット</button>
+        </div>
+        <h2>遊び方</h2>
+    </div>
+    <script>
+        let zi = 1;
+        let zi2 = 2;
+        let j = 0;
+        let j1 = 0;
+        let j2 = 0;
+        let j3 = 0;
+        let no1 = 0;
+        let no2 = 0;
+        let no3 = 0;
+        let no4 = 0;
+        let no5 = 0;
+        let a = 900;
+        let b = 600;
+        let bt1 = 0
+        let d1 = 900;
+        let limitTime = [30000, 60000, 90000, 120000];
+        let lt = 0;
+        let count1 = 30;
+        let mo1 = document.getElementById("mo1");
+        let mo2 = document.getElementById("mo2");
+        let mo3 = document.getElementById("mo3");
+        let allly1 = document.getElementById("ally1");
+        let allly2 = document.getElementById("ally2");
+        let pos = { x: 0, y: 0 };
+        // CSVファイルを取得
+        let csv = new XMLHttpRequest();
+
+        // CSVファイルへのパス
+        csv.open("GET", "./Book1.csv", false);
+        let hairetu = [];
+        // csvファイル読み込み失敗時のエラー対応
+        csv.send(null);
+        console.log(csv.status);
+        // 改行ごとに配列化
+        let lines = csv.responseText.split(/\r\n|\n/);
+        console.log(lines);
+        // 1行ごとに処理
+        for (let i = 0; i < lines.length; ++i) {
+            let cells = lines[i].split(",");
+            if (cells.length != 1) {
+                hairetu.push(cells);
+            }
+        }
+
+        console.log(hairetu);
+        let mondai = 0;
+
+        function rankaku() {
+            //document.write('<img src="'+hairetu[0]+'">');
+            var img = new Image();
+            img.src = hairetu[mondai][0];
+            mondai++;
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, 1280, 720);
+            }
+            ctx.drawImage(enemy3, ran5, ran6, w3, h3); //ran以降にcanvasいっぱいに記述
+        }
+
+        window.onload = function () {
+            canvas = document.getElementById("can");
+            ctx = canvas.getContext("2d");
+            rankaku();
+            console.log("kaketa");
+            canvas.addEventListener("click", hoge);
+        }
+
+
+        document.getElementById("sta").style.opacity = 1;
+
+        document.getElementById("lt1").onclick = function () {
+            lt = 0;
+            count1 = 30;
+            document.getElementById("start").style.display = "block";
+            console.log(lt);
+            console.log(limitTime[lt]);
+        }
+        document.getElementById("lt2").onclick = function () {
+            lt = 1;
+            count1 = 60;
+            document.getElementById("start").style.display = "block";
+            console.log(lt);
+            console.log(limitTime[lt]);
+        }
+        document.getElementById("lt3").onclick = function () {
+            lt = 2;
+            count1 = 90;
+            document.getElementById("start").style.display = "block";
+            console.log(lt);
+            console.log(limitTime[lt]);
+        }
+        document.getElementById("lt4").onclick = function () {
+            lt = 3;
+            count1 = 120;
+            document.getElementById("start").style.display = "block";
+            console.log(lt);
+            console.log(limitTime[lt]);
+        }
+        document.getElementById("rise").onclick = function () {
+            location.reload();
+        }
+
+        document.getElementById("start").onclick = function () {
+            canvas = document.getElementById("can");
+            ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, 1280, 720);
+            j = 0;
+            j1 = 0;
+            j2 = 0;
+            document.getElementById("start").style.display = "none";
+            const p = document.getElementById("r1");
+            p.innerHTML = "正解数" + j1 + "問";
+            const p2 = document.getElementById("r2");
+            p2.innerHTML = "不正解数" + j2 + "問";
+            const p3 = document.getElementById("r3");
+            p3.innerHTML = "総スコア" + j;
+            document.getElementById("lt1").style.pointerEvents = "none";
+            document.getElementById("lt2").style.pointerEvents = "none";
+            document.getElementById("lt3").style.pointerEvents = "none";
+            document.getElementById("lt4").style.pointerEvents = "none";
+            console.log(lt);
+            console.log(limitTime);
+            function countDown() {
+                if (count1 > 0) {
+                    count1--;
+                    timer.textContent = "制限時間" + count1 + "秒";
+                } else {
+                    timer.textContent = "タイムアップ！";
+                    clearInterval(countDownTimer);
+                }
+            }
+            const countDownTimer = setInterval(countDown, 1000);
+            rankaku();
+            timerId = setTimeout(finish, limitTime[lt])
+        }
+
+        function finish() {
+            canvas = document.getElementById("can");
+            ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, 1280, 720);
+            let text = "ゲーム終了！総スコア" + j + "ポイント！";
+            let fontSize = 50;
+            ctx.font = "75px Arial";
+            let textWidth = ctx.measureText(text).width;
+            ctx.fillText(text, (1280 - textWidth) / 2, 420);
+            document.getElementById("kakusi").style.zIndex = 5;
+            if (j > j3) {
+                j3 = j
+                const p4 = document.getElementById("r4");
+                p4.innerHTML = "ハイスコア" + j3;
+                ahaikou.play();
+            }
+            timerId = setTimeout(saisyoukyo, 1000);
+            function saisyoukyo() {
+                ctx.clearRect(0, 0, 1280, 720);
+                let text = "ゲーム終了！総スコア" + j + "ポイント！";
+                let fontSize = 50;
+                ctx.font = "75px Arial";
+                let textWidth = ctx.measureText(text).width;
+                ctx.fillText(text, (1280 - textWidth) / 2, 420);
+                document.getElementById("kakusi").style.zIndex = 1;
+                document.getElementById("lt1").style.pointerEvents = "auto";
+                document.getElementById("lt2").style.pointerEvents = "auto";
+                document.getElementById("lt3").style.pointerEvents = "auto";
+                document.getElementById("lt4").style.pointerEvents = "auto";
+
+            }
+        }
+
+        document.getElementById("se1").onclick = function () {
+            var date = new Date();
+            // 年月日等の各要素を取得
+            var y = date.getFullYear();
+            var m = ('0' + (date.getMonth() + 1)).slice(-2);
+            var d = ('0' + date.getDate()).slice(-2);
+            var h = ('0' + date.getHours()).slice(-2);
+            var min = ('0' + date.getMinutes()).slice(-2);
+            var s = ('0' + date.getSeconds()).slice(-2);
+            var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
+            // HTML要素に現在日時を表示する
+            var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+            console.log(now);
+            console.log("選択肢1");
+            console.log(hairetu[mondai-1][1]);
+            count1 = 30;
+            console.log(mondai);
+            ctx.clearRect(0, 0, 1280, 720);
+            var img = new Image();
+            img.src = hairetu[mondai][0];
+            mondai++;
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, 1280, 720);
+                var date = new Date();
+                // 年月日等の各要素を取得
+                var y = date.getFullYear();
+                var m = ('0' + (date.getMonth() + 1)).slice(-2);
+                var d = ('0' + date.getDate()).slice(-2);
+                var h = ('0' + date.getHours()).slice(-2);
+                var min = ('0' + date.getMinutes()).slice(-2);
+                var s = ('0' + date.getSeconds()).slice(-2);
+                var ms = date.getMilliseconds();
+                // HTML要素に現在日時を表示する
+                var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+                console.log(now);
+            }
+        }
+
+        document.getElementById("se2").onclick = function () {
+            var date = new Date();
+            // 年月日等の各要素を取得
+            var y = date.getFullYear();
+            var m = ('0' + (date.getMonth() + 1)).slice(-2);
+            var d = ('0' + date.getDate()).slice(-2);
+            var h = ('0' + date.getHours()).slice(-2);
+            var min = ('0' + date.getMinutes()).slice(-2);
+            var s = ('0' + date.getSeconds()).slice(-2);
+            var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
+            // HTML要素に現在日時を表示する
+            var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+            console.log(now);
+            console.log("選択肢2");
+            console.log(hairetu[mondai-1][1]);
+            count1 = 30;
+            console.log(mondai);
+            ctx.clearRect(0, 0, 1280, 720);
+            var img = new Image();
+            img.src = hairetu[mondai][0];
+            mondai++;
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, 1280, 720);
+                var date = new Date();
+                // 年月日等の各要素を取得
+                var y = date.getFullYear();
+                var m = ('0' + (date.getMonth() + 1)).slice(-2);
+                var d = ('0' + date.getDate()).slice(-2);
+                var h = ('0' + date.getHours()).slice(-2);
+                var min = ('0' + date.getMinutes()).slice(-2);
+                var s = ('0' + date.getSeconds()).slice(-2);
+                var ms = date.getMilliseconds();
+                // HTML要素に現在日時を表示する
+                var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+                console.log(now);
+            }
+        }
+
+        function kaku() {
+
+            no1 = 0;
+            no2 = 0;
+            no3 = 0;
+
+            rankaku();
+
+        }
+
+
+
+        if (bt1 = 1) {
+            console.log(mondaisuu);
+            //以下問題数と同じ数だけ増やす　押されたボタンをリセットし問題数を進め正誤を表示　今後時間も実装の必要あり。
+
+        } else if (bt2 = 1) {
+
+        }
+
+
+
+        if (mondai = 100) {
+            //問題画像を表示
+            if (bt1 = 1) {
+                answer = 0 //answer=0は正解を表す　1が不正解
+            } else if (bt2 = 1) {
+                answer = 1 //answer=1は不正解を表す
+            }                //bt1=1ボタン1が押された場合を表すニュートラルは０　以下ボタンの数だけ行う。アンサーの数を書き換えるだけで動作させることが可能
+        }
+        //ボタンが押されたとき
+        //押されたボタンと時間を記録し、ｃｓｖに従い次の問題を出す　ｃｓｖ
+
+
+    </script>
+</body>
+
+</html>
