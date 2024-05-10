@@ -151,7 +151,7 @@
             display: inline-block;
         }
 
-        #rise {
+        #down {
             display: block;
             display: inline-block;
         }
@@ -213,14 +213,6 @@
         <p id="r4">ハイスコア</p>
         <p id="timer">制限時間 秒</p>
     </div>
-    <div id="game">
-        <img src="road_douro.png" id="haikei">
-        <img src="mo1.png" id="mo1" onclick="pushed1()">
-        <img src="mo2.png" id="mo2" onclick="pushed2()">
-        <img src="mo3.png" id="mo3" onclick="pushed3()">
-        <img src="bmika1.png" id="ally1" onclick="pushed4()">
-        <img src="bmika2.png" id="ally2" onclick="pushed5()">
-    </div>
     <div id="kakusi"></div>
     <div id="sta"><img id="im1" src="nc91679.png"></div>
     <div id="bakuhadiv"><img src="bakuha.png" id="bakuha"></div>
@@ -231,7 +223,7 @@
             <button id="se3">③</button>
             <button id="se4">④</button>
             <button id="se5">⑤</button>
-            <button id="rise">リセット</button>
+            <button id="down">ダウンロード</button>
         </div>
         <h2>遊び方</h2>
     </div>
@@ -283,10 +275,10 @@
         console.log(hairetu);
         let mondai = 0;
 
-        let syutudaizikan =["出題時間"];
+        let syutudaizikan = ["出題時間"];
         let kaitouzikan = ["回答時間"];
 
-//問題初期記述
+        //問題初期記述
 
         function rankaku() {
             //document.write('<img src="'+hairetu[0]+'">');
@@ -420,6 +412,8 @@
             }
         }
 
+        
+
         document.getElementById("se1").onclick = function () {
             var date = new Date();
             // 年月日等の各要素を取得
@@ -436,7 +430,7 @@
             console.log(kaitouzikan);
             console.log(now);
             console.log("選択肢1");
-            console.log(hairetu[mondai-1][1]);
+            console.log(hairetu[mondai - 1][1]);
             console.log(kaitouzikan);
             count1 = 30;
             console.log(mondai);
@@ -479,7 +473,7 @@
             console.log(kaitouzikan);
             console.log(now);
             console.log("選択肢2");
-            console.log(hairetu[mondai-1][1]);
+            console.log(hairetu[mondai - 1][1]);
             count1 = 30;
             console.log(mondai);
             ctx.clearRect(0, 0, 1280, 720);
@@ -522,7 +516,7 @@
             console.log(kaitouzikan);
             console.log(now);
             console.log("選択肢3");
-            console.log(hairetu[mondai-1][1]);
+            console.log(hairetu[mondai - 1][1]);
             count1 = 30;
             console.log(mondai);
             ctx.clearRect(0, 0, 1280, 720);
@@ -564,7 +558,7 @@
             console.log(kaitouzikan);
             console.log(now);
             console.log("選択肢4");
-            console.log(hairetu[mondai-1][1]);
+            console.log(hairetu[mondai - 1][1]);
             count1 = 30;
             console.log(mondai);
             ctx.clearRect(0, 0, 1280, 720);
@@ -606,7 +600,7 @@
             console.log(kaitouzikan);
             console.log(now);
             console.log("選択肢5");
-            console.log(hairetu[mondai-1][1]);
+            console.log(hairetu[mondai - 1][1]);
             count1 = 30;
             console.log(mondai);
             ctx.clearRect(0, 0, 1280, 720);
@@ -632,7 +626,25 @@
             }
         }
 
+        document.getElementById("down").onclick = function () {
+            console.log("da");
+            console.log("daun");
+            let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+            let blob = new Blob([bom, kaitouzikan], { type: "text/csv" });
+            let link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = "kaitouzikann.csv";
+            link.click();
 
+            let bom1 = new Uint8Array([0xEF, 0xBB, 0xBF]);
+            let blob1 = new Blob([bom1, syutudaizikan], { type: "text/csv" });
+            let link1 = document.createElement('a');
+            link1.href = URL.createObjectURL(blob1);
+            link1.download = 'syutudaizikan.csv';
+            link1.click();
+
+            console.log("hannnou");
+        }
 
         function kaku() {
 
@@ -666,6 +678,12 @@
         }
         //ボタンが押されたとき
         //押されたボタンと時間を記録し、ｃｓｖに従い次の問題を出す　ｃｓｖ
+
+
+
+        
+
+
 
 
     </script>
