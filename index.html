@@ -274,6 +274,10 @@
         console.log(hairetu);
         let mondai = 0;
 
+        let syutudaizikan =["出題時間"];
+
+//問題初期記述
+
         function rankaku() {
             //document.write('<img src="'+hairetu[0]+'">');
             var img = new Image();
@@ -281,8 +285,19 @@
             mondai++;
             img.onload = function () {
                 ctx.drawImage(img, 0, 0, 1280, 720);
+                // 年月日等の各要素を取得
+                var y = date.getFullYear();
+                var m = ('0' + (date.getMonth() + 1)).slice(-2);
+                var d = ('0' + date.getDate()).slice(-2);
+                var h = ('0' + date.getHours()).slice(-2);
+                var min = ('0' + date.getMinutes()).slice(-2);
+                var s = ('0' + date.getSeconds()).slice(-2);
+                var ms = date.getMilliseconds();
+                // HTML要素に現在日時を表示する
+                var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+                console.log(now);
             }
-            ctx.drawImage(enemy3, ran5, ran6, w3, h3); //ran以降にcanvasいっぱいに記述
+            syutudaizikan.push(now);
         }
 
         window.onload = function () {
@@ -429,7 +444,9 @@
                 var ms = date.getMilliseconds();
                 // HTML要素に現在日時を表示する
                 var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+                syutudaizikan.push(now);
                 console.log(now);
+                console.log(syutudaizikan);
             }
         }
 
@@ -467,7 +484,9 @@
                 var ms = date.getMilliseconds();
                 // HTML要素に現在日時を表示する
                 var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+                syutudaizikan.push(now);
                 console.log(now);
+                console.log(syutudaizikan);
             }
         }
 
