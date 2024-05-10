@@ -135,11 +135,19 @@
 
         #se3 {
             display: block;
+            order: 3;
             display: inline-block;
         }
 
         #se4 {
             display: block;
+            order: 4;
+            display: inline-block;
+        }
+
+        #se5 {
+            display: block;
+            order: 5;
             display: inline-block;
         }
 
@@ -222,6 +230,7 @@
             <button id="se2">②</button>
             <button id="se3">③</button>
             <button id="se4">④</button>
+            <button id="se5">⑤</button>
             <button id="rise">リセット</button>
         </div>
         <h2>遊び方</h2>
@@ -275,6 +284,7 @@
         let mondai = 0;
 
         let syutudaizikan =["出題時間"];
+        let kaitouzikan = ["回答時間"];
 
 //問題初期記述
 
@@ -422,9 +432,12 @@
             var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
             // HTML要素に現在日時を表示する
             var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+            kaitouzikan.push(now);
+            console.log(kaitouzikan);
             console.log(now);
             console.log("選択肢1");
             console.log(hairetu[mondai-1][1]);
+            console.log(kaitouzikan);
             count1 = 30;
             console.log(mondai);
             ctx.clearRect(0, 0, 1280, 720);
@@ -462,6 +475,8 @@
             var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
             // HTML要素に現在日時を表示する
             var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+            kaitouzikan.push(now);
+            console.log(kaitouzikan);
             console.log(now);
             console.log("選択肢2");
             console.log(hairetu[mondai-1][1]);
@@ -489,6 +504,135 @@
                 console.log(syutudaizikan);
             }
         }
+
+
+        document.getElementById("se3").onclick = function () {
+            var date = new Date();
+            // 年月日等の各要素を取得
+            var y = date.getFullYear();
+            var m = ('0' + (date.getMonth() + 1)).slice(-2);
+            var d = ('0' + date.getDate()).slice(-2);
+            var h = ('0' + date.getHours()).slice(-2);
+            var min = ('0' + date.getMinutes()).slice(-2);
+            var s = ('0' + date.getSeconds()).slice(-2);
+            var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
+            // HTML要素に現在日時を表示する
+            var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+            kaitouzikan.push(now);
+            console.log(kaitouzikan);
+            console.log(now);
+            console.log("選択肢3");
+            console.log(hairetu[mondai-1][1]);
+            count1 = 30;
+            console.log(mondai);
+            ctx.clearRect(0, 0, 1280, 720);
+            var img = new Image();
+            img.src = hairetu[mondai][0];
+            mondai++;
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, 1280, 720);
+                var date = new Date();
+                // 年月日等の各要素を取得
+                var y = date.getFullYear();
+                var m = ('0' + (date.getMonth() + 1)).slice(-2);
+                var d = ('0' + date.getDate()).slice(-2);
+                var h = ('0' + date.getHours()).slice(-2);
+                var min = ('0' + date.getMinutes()).slice(-2);
+                var s = ('0' + date.getSeconds()).slice(-2);
+                var ms = date.getMilliseconds();
+                // HTML要素に現在日時を表示する
+                var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+                syutudaizikan.push(now);
+                console.log(now);
+                console.log(syutudaizikan);
+            }
+        }
+
+        document.getElementById("se4").onclick = function () {
+            var date = new Date();
+            // 年月日等の各要素を取得
+            var y = date.getFullYear();
+            var m = ('0' + (date.getMonth() + 1)).slice(-2);
+            var d = ('0' + date.getDate()).slice(-2);
+            var h = ('0' + date.getHours()).slice(-2);
+            var min = ('0' + date.getMinutes()).slice(-2);
+            var s = ('0' + date.getSeconds()).slice(-2);
+            var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
+            // HTML要素に現在日時を表示する
+            var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+            kaitouzikan.push(now);
+            console.log(kaitouzikan);
+            console.log(now);
+            console.log("選択肢4");
+            console.log(hairetu[mondai-1][1]);
+            count1 = 30;
+            console.log(mondai);
+            ctx.clearRect(0, 0, 1280, 720);
+            var img = new Image();
+            img.src = hairetu[mondai][0];
+            mondai++;
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, 1280, 720);
+                var date = new Date();
+                // 年月日等の各要素を取得
+                var y = date.getFullYear();
+                var m = ('0' + (date.getMonth() + 1)).slice(-2);
+                var d = ('0' + date.getDate()).slice(-2);
+                var h = ('0' + date.getHours()).slice(-2);
+                var min = ('0' + date.getMinutes()).slice(-2);
+                var s = ('0' + date.getSeconds()).slice(-2);
+                var ms = date.getMilliseconds();
+                // HTML要素に現在日時を表示する
+                var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+                syutudaizikan.push(now);
+                console.log(now);
+                console.log(syutudaizikan);
+            }
+        }
+
+        document.getElementById("se5").onclick = function () {
+            var date = new Date();
+            // 年月日等の各要素を取得
+            var y = date.getFullYear();
+            var m = ('0' + (date.getMonth() + 1)).slice(-2);
+            var d = ('0' + date.getDate()).slice(-2);
+            var h = ('0' + date.getHours()).slice(-2);
+            var min = ('0' + date.getMinutes()).slice(-2);
+            var s = ('0' + date.getSeconds()).slice(-2);
+            var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
+            // HTML要素に現在日時を表示する
+            var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+            kaitouzikan.push(now);
+            console.log(kaitouzikan);
+            console.log(now);
+            console.log("選択肢5");
+            console.log(hairetu[mondai-1][1]);
+            count1 = 30;
+            console.log(mondai);
+            ctx.clearRect(0, 0, 1280, 720);
+            var img = new Image();
+            img.src = hairetu[mondai][0];
+            mondai++;
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, 1280, 720);
+                var date = new Date();
+                // 年月日等の各要素を取得
+                var y = date.getFullYear();
+                var m = ('0' + (date.getMonth() + 1)).slice(-2);
+                var d = ('0' + date.getDate()).slice(-2);
+                var h = ('0' + date.getHours()).slice(-2);
+                var min = ('0' + date.getMinutes()).slice(-2);
+                var s = ('0' + date.getSeconds()).slice(-2);
+                var ms = date.getMilliseconds();
+                // HTML要素に現在日時を表示する
+                var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+                syutudaizikan.push(now);
+                console.log(now);
+                console.log(syutudaizikan);
+            }
+        }
+
+
 
         function kaku() {
 
