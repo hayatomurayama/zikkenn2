@@ -276,7 +276,8 @@
         let mondai = 0;
 
         let syutudaizikan = ["出題時間"];
-        let kaitouzikan = ["回答時間"];
+        let kaitoukanren = [["回答時間"],
+                          ["選択したもの"]] ;
 
         //問題初期記述
 
@@ -426,12 +427,13 @@
             var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
             // HTML要素に現在日時を表示する
             var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
-            kaitouzikan.push(now);
-            console.log(kaitouzikan);
+            kaitoukanren[0].push(now);
+            kaitoukanren[1].push("選択肢1");
+            console.log(kaitoukanren);
             console.log(now);
             console.log("選択肢1");
             console.log(hairetu[mondai - 1][1]);
-            console.log(kaitouzikan);
+            console.log(kaitoukanren);
             count1 = 30;
             console.log(mondai);
             ctx.clearRect(0, 0, 1280, 720);
@@ -469,8 +471,9 @@
             var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
             // HTML要素に現在日時を表示する
             var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
-            kaitouzikan.push(now);
-            console.log(kaitouzikan);
+            kaitoukanren[0].push(now);
+            kaitoukanren[1].push("選択肢2");
+            console.log(kaitoukanren);
             console.log(now);
             console.log("選択肢2");
             console.log(hairetu[mondai - 1][1]);
@@ -512,8 +515,8 @@
             var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
             // HTML要素に現在日時を表示する
             var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
-            kaitouzikan.push(now);
-            console.log(kaitouzikan);
+            kaitoukanren[0].push(now);
+            kaitoukanren[1].push("選択肢3");
             console.log(now);
             console.log("選択肢3");
             console.log(hairetu[mondai - 1][1]);
@@ -554,8 +557,8 @@
             var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
             // HTML要素に現在日時を表示する
             var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
-            kaitouzikan.push(now);
-            console.log(kaitouzikan);
+            kaitoukanren[0].push(now);
+            kaitoukanren[1].push("選択肢4");
             console.log(now);
             console.log("選択肢4");
             console.log(hairetu[mondai - 1][1]);
@@ -596,8 +599,8 @@
             var ms = date.getMilliseconds();//).slice(-2)   ('0' + 
             // HTML要素に現在日時を表示する
             var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
-            kaitouzikan.push(now);
-            console.log(kaitouzikan);
+            kaitoukanren[0].push(now);
+            kaitoukanren[1].push("選択肢5");
             console.log(now);
             console.log("選択肢5");
             console.log(hairetu[mondai - 1][1]);
@@ -630,7 +633,7 @@
             console.log("da");
             console.log("daun");
             let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
-            let blob = new Blob([bom, kaitouzikan], { type: "text/csv" });
+            let blob = new Blob([bom, kaitoukanren], { type: "text/csv" });
             let link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = "kaitouzikann.csv";
@@ -683,6 +686,12 @@
 
         
 
+        let bom1 = new Uint8Array([0xEF, 0xBB, 0xBF]);
+        let blob2 = new Blob([bom, syutudaizikan], { type: "text/csv" });
+        let link1 = document.createElement('b');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'syutudaizikan.txt';
+        link1.click();
 
 
 
