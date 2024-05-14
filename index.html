@@ -207,7 +207,7 @@
     </div>
     <button id="start" onclick="gamestart">ゲームスタート！</button>
     <div id="mozi">
-        <p id="r1">ご協力ありがとうございました。</p>
+        <p id="r1">実験への参加ありがとうございます。上のボタンを押せばスタートボタンが出てきます。スタートを押した時点から開始です</p>
         <p id="r2"></p>
         <p id="r3"></p>
         <p id="r4"></p>
@@ -361,6 +361,7 @@
                     count1--;
                 } else {
                     timer.textContent = "タイムアップ！";
+                    r1.textContent = "ご協力ありがとうございました！アンケートにご協力いただければ幸いです。";
                     clearInterval(countDownTimer);
                 }
             }
@@ -369,6 +370,11 @@
         }
 
         function finish() {
+            document.getElementById("se1").style.pointerEvents = "none";
+            document.getElementById("se2").style.pointerEvents = "none";
+            document.getElementById("se3").style.pointerEvents = "none";
+            document.getElementById("se4").style.pointerEvents = "none";
+            document.getElementById("se5").style.pointerEvents = "none";
             console.log("owata");
             canvas = document.getElementById("can");
             ctx = canvas.getContext("2d");
@@ -380,6 +386,7 @@
             ctx.fillText(text, (1280 - textWidth) / 2, 420);
             document.getElementById("kakusi").style.zIndex = 6;
             timerId = setTimeout(saisyoukyo, 1000);
+            r1.textContent = "ご協力ありがとうございました！アンケートにご協力いただければ幸いです。";
             function saisyoukyo() {
                 ctx.clearRect(0, 0, 1280, 720);
                 let text = "テスト終了";
@@ -392,8 +399,9 @@
                 document.getElementById("lt2").style.pointerEvents = "auto";
                 document.getElementById("lt3").style.pointerEvents = "auto";
                 document.getElementById("lt4").style.pointerEvents = "auto";
-
+                r1.textContent = "ご協力ありがとうございました！アンケートにご協力いただければ幸いです。";
             }
+
         }
 
 
@@ -630,24 +638,15 @@
             link1.click();
 
             console.log("hannnou");
+            document.getElementById("se1").style.pointerEvents = "auto";
+            document.getElementById("se2").style.pointerEvents = "auto";
+            document.getElementById("se3").style.pointerEvents = "auto";
+            document.getElementById("se4").style.pointerEvents = "auto";
+            document.getElementById("se5").style.pointerEvents = "auto";
         }
 
         function kaku() {
-
-          
-
         }
-
-
-
- 
-
-
-        
-
-
-
-
 
     </script>
 </body>
