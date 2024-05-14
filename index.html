@@ -207,11 +207,11 @@
     </div>
     <button id="start" onclick="gamestart">ゲームスタート！</button>
     <div id="mozi">
-        <p id="r1">敵を0体撃破</p>
-        <p id="r2">味方を0体撃破</p>
-        <p id="r3">総スコア</p>
-        <p id="r4">ハイスコア</p>
-        <p id="timer">制限時間 秒</p>
+        <p id="r1">ご協力ありがとうございました。</p>
+        <p id="r2"></p>
+        <p id="r3"></p>
+        <p id="r4"></p>
+        <p id="timer"></p>
     </div>
     <div id="kakusi"></div>
     <div id="sta"><img id="im1" src="nc91679.png"></div>
@@ -281,34 +281,12 @@
 
         //問題初期記述
 
-        function rankaku() {
-            //document.write('<img src="'+hairetu[0]+'">');
-            var img = new Image();
-            img.src = hairetu[mondai][0];
-            mondai++;
-            img.onload = function () {
-                ctx.drawImage(img, 0, 0, 1280, 720);
-                // 年月日等の各要素を取得
-                var y = date.getFullYear();
-                var m = ('0' + (date.getMonth() + 1)).slice(-2);
-                var d = ('0' + date.getDate()).slice(-2);
-                var h = ('0' + date.getHours()).slice(-2);
-                var min = ('0' + date.getMinutes()).slice(-2);
-                var s = ('0' + date.getSeconds()).slice(-2);
-                var ms = date.getMilliseconds();
-                // HTML要素に現在日時を表示する
-                var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
-                console.log(now);
-            }
-            syutudaizikan.push(now);
-        }
+
 
         window.onload = function () {
             canvas = document.getElementById("can");
             ctx = canvas.getContext("2d");
-            rankaku();
             console.log("kaketa");
-            canvas.addEventListener("click", hoge);
         }
 
 
@@ -350,16 +328,28 @@
             canvas = document.getElementById("can");
             ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, 1280, 720);
-            j = 0;
-            j1 = 0;
-            j2 = 0;
+
+            var img = new Image();
+            img.src = hairetu[mondai][0];
+            mondai++;
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, 1280, 720);
+                // 年月日等の各要素を取得;
+                var date = new Date();
+                var y = date.getFullYear();
+                var m = ('0' + (date.getMonth() + 1)).slice(-2);
+                var d = ('0' + date.getDate()).slice(-2);
+                var h = ('0' + date.getHours()).slice(-2);
+                var min = ('0' + date.getMinutes()).slice(-2);
+                var s = ('0' + date.getSeconds()).slice(-2);
+                var ms = date.getMilliseconds();
+                // HTML要素に現在日時を表示する
+                var now = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s + ':' + ms;
+                console.log(now);
+                syutudaizikan.push(now);
+            }
+
             document.getElementById("start").style.display = "none";
-            const p = document.getElementById("r1");
-            p.innerHTML = "正解数" + j1 + "問";
-            const p2 = document.getElementById("r2");
-            p2.innerHTML = "不正解数" + j2 + "問";
-            const p3 = document.getElementById("r3");
-            p3.innerHTML = "総スコア" + j;
             document.getElementById("lt1").style.pointerEvents = "none";
             document.getElementById("lt2").style.pointerEvents = "none";
             document.getElementById("lt3").style.pointerEvents = "none";
@@ -369,37 +359,30 @@
             function countDown() {
                 if (count1 > 0) {
                     count1--;
-                    timer.textContent = "制限時間" + count1 + "秒";
                 } else {
                     timer.textContent = "タイムアップ！";
                     clearInterval(countDownTimer);
                 }
             }
             const countDownTimer = setInterval(countDown, 1000);
-            rankaku();
-            timerId = setTimeout(finish, limitTime[lt])
+            timerId = setTimeout(finish, limitTime[lt]);
         }
 
         function finish() {
+            console.log("owata");
             canvas = document.getElementById("can");
             ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, 1280, 720);
-            let text = "ゲーム終了！総スコア" + j + "ポイント！";
+            let text = "テスト終了";
             let fontSize = 50;
             ctx.font = "75px Arial";
             let textWidth = ctx.measureText(text).width;
             ctx.fillText(text, (1280 - textWidth) / 2, 420);
-            document.getElementById("kakusi").style.zIndex = 5;
-            if (j > j3) {
-                j3 = j
-                const p4 = document.getElementById("r4");
-                p4.innerHTML = "ハイスコア" + j3;
-                ahaikou.play();
-            }
+            document.getElementById("kakusi").style.zIndex = 6;
             timerId = setTimeout(saisyoukyo, 1000);
             function saisyoukyo() {
                 ctx.clearRect(0, 0, 1280, 720);
-                let text = "ゲーム終了！総スコア" + j + "ポイント！";
+                let text = "テスト終了";
                 let fontSize = 50;
                 ctx.font = "75px Arial";
                 let textWidth = ctx.measureText(text).width;
@@ -413,7 +396,7 @@
             }
         }
 
-        
+
 
         document.getElementById("se1").onclick = function () {
             var date = new Date();
@@ -651,47 +634,18 @@
 
         function kaku() {
 
-            no1 = 0;
-            no2 = 0;
-            no3 = 0;
-
-            rankaku();
+          
 
         }
 
 
 
-        if (bt1 = 1) {
-            console.log(mondaisuu);
-            //以下問題数と同じ数だけ増やす　押されたボタンをリセットし問題数を進め正誤を表示　今後時間も実装の必要あり。
-
-        } else if (bt2 = 1) {
-
-        }
-
-
-
-        if (mondai = 100) {
-            //問題画像を表示
-            if (bt1 = 1) {
-                answer = 0 //answer=0は正解を表す　1が不正解
-            } else if (bt2 = 1) {
-                answer = 1 //answer=1は不正解を表す
-            }                //bt1=1ボタン1が押された場合を表すニュートラルは０　以下ボタンの数だけ行う。アンサーの数を書き換えるだけで動作させることが可能
-        }
-        //ボタンが押されたとき
-        //押されたボタンと時間を記録し、ｃｓｖに従い次の問題を出す　ｃｓｖ
-
+ 
 
 
         
 
-        let bom1 = new Uint8Array([0xEF, 0xBB, 0xBF]);
-        let blob2 = new Blob([bom, syutudaizikan], { type: "text/csv" });
-        let link1 = document.createElement('b');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'syutudaizikan.txt';
-        link1.click();
+
 
 
 
