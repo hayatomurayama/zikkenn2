@@ -31,6 +31,7 @@
             border: 10px solid black;
             position: absolute;
             cursor: none;
+            margin: 0 auto;
         }
 
         #aso {
@@ -48,6 +49,7 @@
             border: 10px solid black;
             position: absolute;
             cursor: none;
+            margin: 0 auto;
         }
 
         #sta {
@@ -76,6 +78,7 @@
             cursor: none;
             padding: 0px;
             z-index: 2;
+            margin: 0 auto;
         }
 
         #start {
@@ -125,35 +128,52 @@
             display: block;
             order: 1;
             display: inline-block;
+            font-size: 24px;
+            width: 8em;
+            height: 2em;
         }
 
         #se2 {
             display: block;
             order: 2;
             display: inline-block;
+            font-size: 24px;
+            width: 8em;
+            height: 2em;
         }
 
         #se3 {
             display: block;
             order: 3;
             display: inline-block;
+            font-size: 24px;
+            width: 8em;
+            height: 2em;
         }
 
         #se4 {
             display: block;
             order: 4;
             display: inline-block;
+            font-size: 24px;
+            width: 8em;
+            height: 2em;
         }
 
         #se5 {
             display: block;
             order: 5;
             display: inline-block;
+            font-size: 24px;
+            width: 8em;
+            height: 2em;
         }
 
         #down {
             display: block;
             display: inline-block;
+            width: 10em;
+            height: 3em;
         }
 
         #mozi {
@@ -205,7 +225,7 @@
         <button id="lt4">120秒</button>
         <button id="rise">リセット</button>
     </div>
-    <button id="start" onclick="gamestart">ゲームスタート！</button>
+    <button id="start" onclick="gamestart">スタート！</button>
     <div id="mozi">
         <p id="r1">実験への参加ありがとうございます。上のボタンを押せばスタートボタンが出てきます。スタートを押した時点から開始です</p>
         <p id="r2"></p>
@@ -218,39 +238,29 @@
     <div id="bakuhadiv"><img src="bakuha.png" id="bakuha"></div>
     <canvas id="can" width="1280" height="720"></canvas>
     <div id="aso">
-        <div id="senntakusi0"><button id="se1">①</button>
-            <button id="se2">②</button>
-            <button id="se3">③</button>
-            <button id="se4">④</button>
-            <button id="se5">⑤</button>
-            <button id="down">ダウンロード</button>
-        </div>
+        <table>
+            <tr>
+                <div id="senntakusi0">
+                    <td><button id="se1">①</button></td>
+                    <td><button id="se2">②</button></td>
+                    <td><button id="se3">③</button></td>
+                    <td><button id="se4">④</button></td>
+                    <td><button id="se5">⑤</button></td>
+                    <td><button id="down">ダウンロード</button></td>
+
+                </div>
+            </tr>
+        </table>
         <h2>遊び方</h2>
     </div>
     <script>
         let zi = 1;
         let zi2 = 2;
-        let j = 0;
-        let j1 = 0;
-        let j2 = 0;
-        let j3 = 0;
-        let no1 = 0;
-        let no2 = 0;
-        let no3 = 0;
-        let no4 = 0;
-        let no5 = 0;
-        let a = 900;
-        let b = 600;
-        let bt1 = 0
+
         let d1 = 900;
         let limitTime = [30000, 60000, 90000, 120000];
         let lt = 0;
         let count1 = 30;
-        let mo1 = document.getElementById("mo1");
-        let mo2 = document.getElementById("mo2");
-        let mo3 = document.getElementById("mo3");
-        let allly1 = document.getElementById("ally1");
-        let allly2 = document.getElementById("ally2");
         let pos = { x: 0, y: 0 };
         // CSVファイルを取得
         let csv = new XMLHttpRequest();
@@ -277,7 +287,7 @@
 
         let syutudaizikan = ["出題時間"];
         let kaitoukanren = [["回答時間"],
-                          ["選択したもの"]] ;
+        ["選択したもの"]];
 
         //問題初期記述
 
@@ -621,6 +631,7 @@
         }
 
         document.getElementById("down").onclick = function () {
+            kaitoukanren.join(`n`);
             console.log("da");
             console.log("daun");
             let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
@@ -630,6 +641,7 @@
             link.download = "kaitouzikann.csv";
             link.click();
 
+            syutudaizikan.join("\n");
             let bom1 = new Uint8Array([0xEF, 0xBB, 0xBF]);
             let blob1 = new Blob([bom1, syutudaizikan], { type: "text/csv" });
             let link1 = document.createElement('a');
