@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>2225117-ミニプロ最終版</title>
+    <title>副専攻実践プロジェクト実験用</title>
     <style>
         #mo1 {
             position: absolute;
@@ -221,7 +221,7 @@
     <h1>以下の問題を回答せよ</h1>
     <div id="lt0"><button id="lt1">30秒</button>
         <button id="lt2">60秒</button>
-        <button id="lt3">90秒</button>
+        <button id="lt3">7分</button>
         <button id="lt4">120秒</button>
         <button id="rise">リセット</button>
     </div>
@@ -258,7 +258,7 @@
         let zi2 = 2;
 
         let d1 = 900;
-        let limitTime = [30000, 60000, 90000, 120000];
+        let limitTime = [30000, 60000, 420000, 120000];
         let lt = 0;
         let count1 = 30;
         let pos = { x: 0, y: 0 };
@@ -318,7 +318,7 @@
         }
         document.getElementById("lt3").onclick = function () {
             lt = 2;
-            count1 = 90;
+            count1 = 420;
             document.getElementById("start").style.display = "block";
             console.log(lt);
             console.log(limitTime[lt]);
@@ -338,7 +338,7 @@
             canvas = document.getElementById("can");
             ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, 1280, 720);
-
+            document.getElementById("down").style.pointerEvents = "none";
             var img = new Image();
             img.src = hairetu[mondai][0];
             mondai++;
@@ -385,6 +385,7 @@
             document.getElementById("se3").style.pointerEvents = "none";
             document.getElementById("se4").style.pointerEvents = "none";
             document.getElementById("se5").style.pointerEvents = "none";
+            document.getElementById("down").style.pointerEvents = "auto";
             console.log("owata");
             canvas = document.getElementById("can");
             ctx = canvas.getContext("2d");
